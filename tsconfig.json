@@ -8,6 +8,13 @@
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "baseUrl": ".",
+    "paths": {
+      "@screens/*": ["./src/screens/*"],
+      "@navigation/*": ["./src/navigation/*"],
+      "@theme/*": ["./src/theme/*"],
+      "@components/*": ["./src/components/*"],
+      "~/*": ["./*"]
+    }
   },
   "exclude": ["node_modules"]
 }

@@ -1,7 +1,12 @@
 module.exports = {
-  arrowParens: 'avoid',
-  bracketSameLine: true,
-  bracketSpacing: false,
+  trailingComma: 'es5',
   singleQuote: true,
-  trailingComma: 'all',
+  overrides: [
+    {
+      files: '.json',
+      options: {
+        parser: 'json',
+      },
+    },
+  ],
 };
