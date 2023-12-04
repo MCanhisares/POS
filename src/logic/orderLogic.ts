@@ -6,7 +6,7 @@ export const calculateOrderSummary = (
   taxes: Tax[]
 ) => {
   const rawSubtotal = items.reduce((prev, cur) => prev + cur.price, 0);
-  const finalTaxes = calculateTaxes(rawSubtotal, items, taxes);
+  const finalTaxes = calculateTaxes(items, taxes);
   const finalDiscounts = calculateDiscounts(
     rawSubtotal + finalTaxes,
     discounts
@@ -16,15 +16,19 @@ export const calculateOrderSummary = (
     rawSubtotal,
     finalTaxes,
     finalDiscounts,
-    finalTotal,
+    finalTotal: finalTotal > 0 ? finalTotal : 0,
   };
 };
 
-const calculateTaxes = (subTotal: number, items: MenuItem[], taxes: Tax[]) => {
+export const calculateTaxes = (
+  items: MenuItem[],
+  taxes: Tax[]
+) => {
+  const rawSubtotal = items.reduce((prev, cur) => prev + cur.price, 0);
   let totalTaxes = 0;
   taxes.forEach((t) => {
     if (!t.category) {
-      totalTaxes += subTotal * t.price;
+      totalTaxes += rawSubtotal * t.price;
     }
     totalTaxes += items
       .filter((i) => i.category === t.category)
@@ -33,7 +37,7 @@ const calculateTaxes = (subTotal: number, items: MenuItem[], taxes: Tax[]) => {
   return totalTaxes;
 };
 
-const calculateDiscounts = (subTotal: number, discounts: Discount[]) => {
+export const calculateDiscounts = (subTotal: number, discounts: Discount[]) => {
   let finalSubtotal = subTotal;
   const flatDiscounts: Discount[] = [];
   const percentDiscounts: Discount[] = [];
@@ -46,6 +50,9 @@ const calculateDiscounts = (subTotal: number, discounts: Discount[]) => {
     }
   });
   finalSubtotal += flatDiscounts.reduce((prev, curr) => prev + curr.price, 0);
+  if (finalSubtotal < 0) {
+    return subTotal - finalSubtotal;
+  }
   finalSubtotal +=
     percentDiscounts.reduce((prev, curr) => prev + curr.price, 0) *
     finalSubtotal;
