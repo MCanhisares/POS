@@ -17,6 +17,8 @@
       "@data/*": ["./src/data/*"],
       "@logic/*": ["./src/logic/*"],
       "@utils/*": ["./src/utils/*"],
+      "@hooks/*": ["./src/hooks/*"],
+      "@contexts/*": ["./src/contexts/*"],
       "~/*": ["./*"]
     }
   },

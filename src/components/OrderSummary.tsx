@@ -1,6 +1,6 @@
 import { formatCurrencyText } from '@utils/text';
 import React, { memo } from 'react';
-import { View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { CoreText } from './CoreText';
 import { Separator } from './Separator';
 
@@ -16,15 +16,25 @@ type OrderSummaryProps = {
 };
 export const OrderSummary = memo(({ summary }: OrderSummaryProps) => {
   return (
-    <View>
-      <CoreText>Subtotal: {`${formatCurrencyText(summary.rawSubtotal)}`}</CoreText>
+    <View style={styles.container}>
+      <CoreText>
+        Subtotal: {`${formatCurrencyText(summary.rawSubtotal)}`}
+      </CoreText>
       <Separator />
       <CoreText>Taxes: {`${formatCurrencyText(summary.finalTaxes)}`}</CoreText>
       <Separator />
-      <CoreText>Discounts: {`${formatCurrencyText(summary.finalDiscounts)}`}</CoreText>
+      <CoreText>
+        Discounts: {`${formatCurrencyText(summary.finalDiscounts)}`}
+      </CoreText>
       <Separator />
       <CoreText>Total: {`${formatCurrencyText(summary.finalTotal)}`}</CoreText>
       <Separator />
     </View>
   );
+});
+
+const styles = StyleSheet.create({
+  container: {
+    marginTop: 16,
+  },
 });
