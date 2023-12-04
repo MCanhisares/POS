@@ -1,4 +1,5 @@
-import { ListItem } from '@components/ListItem';
+import { OrderListItem } from '@components/OrderListItem';
+import { OrderSummary } from '@components/OrderSummary';
 import { SectionTitle } from '@components/SectionTitle';
 import { Separator } from '@components/Separator';
 import { Menu, MenuItem, items } from '@data/items';
@@ -11,15 +12,20 @@ import {
   SectionListData,
   SectionListRenderItem,
 } from 'react-native';
+import { OrderContext } from '../contexts/OrderContext';
 import { BaseScreen } from './BaseScreen';
 
 export const OrderScreen: RootStackScreenProp<RootScreens.Order> = ({
   navigation,
 }) => {
+  const { addItem, orderSummary } = OrderContext.useContainer();
   const menu = useMemo(() => items.menu, []);
   const renderItem: SectionListRenderItem<MenuItem, Menu> = useCallback(
     ({ item }) => {
-      return <ListItem item={item} onPress={() => console.log({ item })} />;
+      const onPress = () => {
+        addItem(item);
+      };
+      return <OrderListItem item={item} onPress={onPress} />;
     },
     []
   );
@@ -47,6 +53,7 @@ export const OrderScreen: RootStackScreenProp<RootScreens.Order> = ({
         sections={menu}
         removeClippedSubviews
       />
+      <OrderSummary summary={orderSummary} />
     </BaseScreen>
   );
 };

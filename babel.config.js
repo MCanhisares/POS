@@ -6,10 +6,12 @@ module.exports = {
       {
         alias: {
           '@screens': './src/screens',
+          '@logic': './src/logic',
           '@navigation': './src/navigation',
           '@theme': './src/theme',
           '@components': './src/components',
           '@data': './src/data',
+          '@utils': './src/utils',
           '~': './',
         },
       },

@@ -15,6 +15,8 @@
       "@theme/*": ["./src/theme/*"],
       "@components/*": ["./src/components/*"],
       "@data/*": ["./src/data/*"],
+      "@logic/*": ["./src/logic/*"],
+      "@utils/*": ["./src/utils/*"],
       "~/*": ["./*"]
     }
   },
