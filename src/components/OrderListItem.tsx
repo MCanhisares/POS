@@ -1,7 +1,8 @@
-import { Discount, MenuItem } from '@data/items';
+import { MenuItem } from '@data/items';
 import { formatCurrencyText } from '@utils/text';
 import React from 'react';
-import { StyleSheet, TouchableOpacity } from 'react-native';
+import { Button, StyleSheet, View } from 'react-native';
+import Swipeable from 'react-native-gesture-handler/Swipeable';
 import { CoreText } from './CoreText';
 
 export type OrderListItemProps = {
@@ -10,11 +11,26 @@ export type OrderListItemProps = {
 };
 
 export const OrderListItem = ({ item, onPress }: OrderListItemProps) => {
+  const renderRightActions = () => {
+    return (
+      <View
+        style={{
+          margin: 0,
+          alignContent: 'center',
+          justifyContent: 'center',
+          width: 70,
+        }}
+      >
+        <Button color="red" onPress={onPress} title="DELETE"></Button>
+      </View>
+    );
+  };
+
   return (
-    <TouchableOpacity style={styles.container} onPress={onPress}>
+    <Swipeable containerStyle={styles.container} renderRightActions={renderRightActions} >
       <CoreText>{item.name}</CoreText>
       <CoreText>{formatCurrencyText(item.price)}</CoreText>
-    </TouchableOpacity>
+    </Swipeable>
   );
 };
 

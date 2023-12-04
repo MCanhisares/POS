@@ -3,6 +3,7 @@ export const DefaultTheme = {
     white: '#FFFFFF',
     black: '#000000',
     lightGray: '#C6C6C6',
-    darkGray: '#454545'
+    darkGray: '#454545',
+    lightBlue: '#72bcd4',
   },
 };

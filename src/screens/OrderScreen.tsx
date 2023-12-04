@@ -1,59 +1,72 @@
-import { OrderListItem } from '@components/OrderListItem';
+import { MenuList } from '@components/MenuList';
+import { OrderList } from '@components/OrderList';
 import { OrderSummary } from '@components/OrderSummary';
-import { SectionTitle } from '@components/SectionTitle';
-import { Separator } from '@components/Separator';
-import { Menu, MenuItem, items } from '@data/items';
+import { OrderTabs } from '@components/OrderTabs';
+import { MenuItem, items } from '@data/items';
+import { faAdd } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { useToggle } from '@hooks/useToggle';
 import { RootScreens } from '@navigation/RootScreens';
 import { RootStackScreenProp } from '@navigation/RootStack';
-import React, { useCallback, useMemo } from 'react';
-import {
-  Button,
-  SectionList,
-  SectionListData,
-  SectionListRenderItem,
-} from 'react-native';
+import React, { useCallback, useEffect, useMemo } from 'react';
+import { Button, StyleSheet, TouchableOpacity } from 'react-native';
 import { OrderContext } from '../contexts/OrderContext';
 import { BaseScreen } from './BaseScreen';
 
 export const OrderScreen: RootStackScreenProp<RootScreens.Order> = ({
   navigation,
 }) => {
-  const { addItem, orderSummary } = OrderContext.useContainer();
+  const [goToMenu, goToOrder, isMenuOpen] = useToggle(true);
   const menu = useMemo(() => items.menu, []);
-  const renderItem: SectionListRenderItem<MenuItem, Menu> = useCallback(
-    ({ item }) => {
-      const onPress = () => {
-        addItem(item);
-      };
-      return <OrderListItem item={item} onPress={onPress} />;
-    },
-    []
-  );
+  const { addItem, orderSummary, currentOrder, removeItem } =
+    OrderContext.useContainer();
 
-  const renderSectionHeader = useCallback(
-    (info: { section: SectionListData<MenuItem, Menu> }) => {
-      return <SectionTitle name={info.section.title} />;
-    },
-    []
-  );
+  useEffect(() => {
+    navigation.setOptions({
+      title: 'Order',
+      headerRight: rightNavButton,
+    });
+  }, []);
 
-  const renderSeparator = useCallback(() => <Separator />, []);
+  const onListItemPress = useCallback((item: MenuItem) => {
+    addItem(item);
+  }, []);
+
+  const rightNavButton = useCallback(() => {
+    const onPress = () => {
+      navigation.navigate(RootScreens.Discounts);
+    };
+    return (
+      <TouchableOpacity onPress={onPress}>
+        <FontAwesomeIcon icon={faAdd} />
+      </TouchableOpacity>
+    );
+  }, []);
 
   return (
     <BaseScreen>
-      <Button
-        title="Add discount"
-        onPress={() => navigation.navigate(RootScreens.Discounts)}
+      <OrderTabs
+        leftButton={{
+          title: 'Menu',
+          onPress: goToOrder,
+          selected: isMenuOpen,
+        }}
+        rightButton={{
+          title: 'Order',
+          onPress: goToMenu,
+          selected: !isMenuOpen,
+        }}
       />
-      <SectionList
-        ItemSeparatorComponent={renderSeparator}
-        keyExtractor={(item, index) => item.name + index}
-        renderItem={renderItem}
-        renderSectionHeader={renderSectionHeader}
-        sections={menu}
-        removeClippedSubviews
-      />
+      {isMenuOpen ? (
+        <MenuList data={menu} onItemPress={onListItemPress} />
+      ) : (
+        <OrderList data={currentOrder} onSwipeItem={removeItem} />
+      )}
+
+      
       <OrderSummary summary={orderSummary} />
     </BaseScreen>
   );
 };
+
+

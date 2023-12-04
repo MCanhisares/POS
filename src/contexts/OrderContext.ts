@@ -1,6 +1,7 @@
 import { OrderSummaryType } from '@components/OrderSummary';
 import { Discount, MenuItem, items } from '@data/items';
 import { calculateOrderSummary } from '@logic/orderLogic';
+import { generateRandomId } from '@utils/text';
 import { useEffect, useState } from 'react';
 import { createContainer } from 'unstated-next';
 
@@ -8,8 +9,12 @@ export type DiscountSelection = {
   selected: boolean;
 } & Discount;
 
+export type MenuItemId = {
+  id: string;
+} & MenuItem;
+
 const useOrder = () => {
-  const [currentOrder, setCurrentOrder] = useState<MenuItem[]>([]);
+  const [currentOrder, setCurrentOrder] = useState<MenuItemId[]>([]);
   const [currentDiscounts, setCurrentDiscounts] = useState<DiscountSelection[]>(
     items.discounts.map((d) => ({ ...d, selected: false }))
   );
@@ -31,12 +36,15 @@ const useOrder = () => {
   }, [currentOrder, currentDiscounts]);
 
   const addItem = (item: MenuItem) => {
-    setCurrentOrder((prevOrder) => [...prevOrder, item]);
+    setCurrentOrder((prevOrder) => [
+      ...prevOrder,
+      { ...item, id: generateRandomId() },
+    ]);
   };
 
-  const removeItem = (item: MenuItem) => {
+  const removeItem = (item: MenuItemId) => {
     setCurrentOrder((prevOrder) =>
-      prevOrder.filter((i) => i.name !== item.name)
+      prevOrder.filter((i) => i.id !== item.id)
     );
   };
 
