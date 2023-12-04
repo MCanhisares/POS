@@ -1,17 +1,20 @@
-/**
- * @format
- */
-
-import 'react-native';
+import { RootStack } from '@navigation/RootStack';
+import { NavigationContainer } from '@react-navigation/native';
+import { render, screen } from '@testing-library/react-native';
 import React from 'react';
-import App from '../App';
 
-// Note: import explicitly to use the types shiped with jest.
-import {it} from '@jest/globals';
+describe('App startup', () => {
+  test('Renders screen correctly', async () => {
+    const component = (
+      <NavigationContainer>
+        <RootStack />
+      </NavigationContainer>
+    );
 
-// Note: test renderer must be required after react-native.
-import renderer from 'react-test-renderer';
+    render(component);
 
-it('renders correctly', () => {
-  renderer.create(<App />);
+    const header = await screen.findByText('Click me');
+
+    expect(header).toBeDefined();
+  });
 });

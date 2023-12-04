@@ -1,6 +1,7 @@
 {
   "extends": "@tsconfig/react-native/tsconfig.json",
   "compilerOptions": {
+    "types": ["node", "jest"],
     "jsx": "react",
     "strict": true,
     "lib": ["ES2021.String"],
