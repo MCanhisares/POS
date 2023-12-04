@@ -9,6 +9,7 @@ module.exports = {
           '@navigation': './src/navigation',
           '@theme': './src/theme',
           '@components': './src/components',
+          '@data': './src/data',
           '~': './',
         },
       },
