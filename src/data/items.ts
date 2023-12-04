@@ -1,10 +1,10 @@
 import data from '@data/restaurant_items.json';
 
-export type Taxes = {
+export type Tax = {
   price: number,
-  categories: string[]
+  category?: string
 };
-export type Discounts = {
+export type Discount = {
   name: string,
   price: number,
   type: 'flat' | 'percent'
@@ -12,6 +12,7 @@ export type Discounts = {
 export type MenuItem = {
   name: string;
   price: number;
+  category: string;
 };
 export type Menu = {
   title: string;
@@ -19,7 +20,7 @@ export type Menu = {
 };
 
 export const items = {
-  taxes: data.taxes as Taxes[],
-  discounts: data.discounts as Discounts[],
+  taxes: data.taxes as Tax[],
+  discounts: data.discounts as Discount[],
   menu: data.menu as Menu[],
 };

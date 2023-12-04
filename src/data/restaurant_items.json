@@ -1,18 +1,18 @@
 {
   "discounts": [
     {
-      "name": "$5 off",
+      "name": "$ 5.00",
       "price": -5,
       "type": "flat"
     },
     {
-      "name": "10% off",
-      "price": -10,
+      "name": "10%",
+      "price": -0.1,
       "type": "percent"
     },
     {
-      "name": "20% off",
-      "price": -20,
+      "name": "20%",
+      "price": -0.2,
       "type": "percent"
     }
   ],
@@ -20,15 +20,15 @@
   "taxes": [
     {
       "price": 0.05,
-      "categories": []
+      "category": null
     },
     {
       "price": 0.08,
-      "categories": []
+      "category": null
     },
     {
       "price": 0.1,
-      "categories": ["alcohol"]
+      "category": "alcohol"
     }
   ],
   "menu": [
@@ -36,14 +36,17 @@
       "title": "Appetizers",
       "data": [
         {
+          "category": "Appetizers",
           "name": "Nachos",
           "price": 13.99
         },
         {
+          "category": "Appetizers",
           "name": "Calamari",
           "price": 11.99
         },
         {
+          "category": "Appetizers",
           "name": "Caesar Salad",
           "price": 10.99
         }
@@ -53,14 +56,17 @@
       "title": "Mains",
       "data": [
         {
+          "category": "Mains",
           "name": "Burger",
           "price": 9.99
         },
         {
+          "category": "Mains",
           "name": "Hotdog",
           "price": 3.99
         },
         {
+          "category": "Mains",
           "name": "Pizza",
           "price": 12.99
         }
@@ -70,14 +76,17 @@
       "title": "Drinks",
       "data": [
         {
+          "category": "Drinks",
           "name": "Water",
           "price": 0
         },
         {
+          "category": "Drinks",
           "name": "Pop",
           "price": 2
         },
         {
+          "category": "Drinks",
           "name": "Orange Juice",
           "price": 3
         }
@@ -87,14 +96,17 @@
       "title": "Alcohol",
       "data": [
         {
+          "category": "Alcohol",
           "name": "Beer",
           "price": 5.00
         },
         {
+          "category": "Alcohol",
           "name": "Cider",
           "price": 6.00
         },
         {
+          "category": "Alcohol",
           "name": "Wine",
           "price": 7.00
         }
